@@ -18,7 +18,7 @@ const Favorites = (props) => {
     },[])
 return <div> 
                 <PageHeadline>Favorites</PageHeadline>
-                {favorites.data.length === 0 ? 
+                {/* {favorites.data.length === 0 ? 
                 <CenterizeItem><NoFavoritesStyle>No Favorites Selected</NoFavoritesStyle></CenterizeItem> :
                  favorites.loading ? 
                 <SpinnerWrapper><CircularProgress /></SpinnerWrapper> : (
@@ -34,7 +34,7 @@ return <div>
                                     </FavoriteItem>
                                     <Button onClick={(e)=>dispatch(favoritesAction(favorite, false))} variant="contained" color="secondary" startIcon={<DeleteIcon />}>Remove from Favorite</Button>
                                 </FavoriteItemWrapper>})}
-               </FavoritesWrapper>)}
+               </FavoritesWrapper>)} */}
         </div>
 }
 
