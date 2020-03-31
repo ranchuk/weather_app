@@ -1,25 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Menu from './components/menuBar/menuBar.js'
+import Home from './components/home/home.js'
+import Favorites from './components/favorites/favorites.js'
+import { Provider } from "react-redux";
+import store from "./store";
+import GeoLocation from './geoLocationAPI'
+import { BrowserRouter, Route } from "react-router-dom";
+import {setFavorites} from './actions/favoritesAction'
+
+GeoLocation()
+//Check for favorites
+if (localStorage.favorites) {
+  store.dispatch(setFavorites(JSON.parse(localStorage.favorites)));
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+          <Menu/>
+          <Route
+            path="/"
+            component={Home}
+            exact
+          />
+          <Route
+            path="/favorites"
+            component={Favorites}
+            exact
+          />
+      </BrowserRouter>
+    </Provider>
   );
 }
 
