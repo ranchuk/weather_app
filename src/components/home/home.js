@@ -3,12 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import {currentCityAction} from '../../actions/currentCityAction'
 import styled from 'styled-components'
-
-
-
+import geoLocationAPI from '../../geoLocationAPI'
 import CurrentCityWeather from '../currentCityWeather/currentCityWeather.js'
 import SearchBar from '../searchBar/searchBar';
 import CircularProgress from '@material-ui/core/CircularProgress';
+// import {geoPositionSearch} from '../../actions/geoPositionAction'
 const Home = () => {
     const dispatch = useDispatch()
     const {data: geoPosition} = useSelector((state) => state.geoPosition)
@@ -23,16 +22,14 @@ const Home = () => {
     },[geoPosition,dispatch])
 
     // useEffect(()=>{
-    //     console.log(currentCity.data)
     //     if(currentCity.data){
     //      dispatch(currentCityAction(currentCity.data.cityInfo))
     //     }
-    // },[])
-
+    // },[currentCity])
 
     return <div id='HomeDiv'>
             <SearchBar/>
-            {currentCity.loading ? 
+            {currentCity.loading || currentCity.data === null ? 
             <SpinnerWrapper>
                 <CircularProgress /> 
                 <SpinnerText>Loading weather data...</SpinnerText>

@@ -5,7 +5,9 @@ import {debounced} from '../../utils'
 import {currentCityAction} from '../../actions/currentCityAction'
 import {SET_AUTO_COMPLETE} from '../../actions/types'
 import CircularProgress from '@material-ui/core/CircularProgress';
-import styled from 'styled-components'
+import styled from 'styled-components';
+// const validator = require('validator');
+// import validator from 'validator';
 
 const SearchBar = () => {
     const dispatch = useDispatch()
@@ -19,28 +21,26 @@ const SearchBar = () => {
         setIsOpen(false)
         dispatch(currentCityAction(city))
     }
-    const validate = (e: any) => {
-        const chars = e.target.value.split('');
-        const char = chars.pop();
-        if (!regex.test(char)) {
-          e.target.value = chars.join('');
-          console.log(`${char} is not a valid character.`);
-        }
-      }
 
     const onQueryChange = (e: any) => {
         const query= e.target.value
-        setQuery(e.target.value)
-        if(query !== '') {
-            debounced(query)
-            setIsOpen(true)
+        setQuery(query)
+
+        if(/^[a-zA-Z]+$/.test(query)){
+            if(query !== '') {
+                debounced(query)
+                setIsOpen(true)
+            }
+            else {
+                setIsOpen(false)
+                dispatch({
+                    type: SET_AUTO_COMPLETE,
+                    payload: null
+                });
+            }
         }
         else {
-            setIsOpen(false)
-            dispatch({
-                type: SET_AUTO_COMPLETE,
-                payload: null
-            });
+            alert('Only english letters allowed')
         }
     }
 

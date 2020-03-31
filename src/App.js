@@ -8,7 +8,6 @@ import store from "./store";
 import GeoLocation from './geoLocationAPI'
 import { BrowserRouter, Route } from "react-router-dom";
 import {setFavorites} from './actions/favoritesAction'
-
 GeoLocation()
 //Check for favorites
 if (localStorage.favorites) {

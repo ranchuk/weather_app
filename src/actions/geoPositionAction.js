@@ -1,6 +1,6 @@
-// import {geoPositionSearch as geoPositionSearchAPI} from '../apiMap'
+import {geoPositionSearch as geoPositionSearchAPI} from '../apiMap'
 import {SET_GEO_POSITION_KEY, LOADING_GEO_POSITION_KEY, ERROR_GEO_POSITION_KEY} from '../actions/types'
-// import axios from 'axios'
+import axios from 'axios'
 export const geoPositionSearch = (crd) => async (dispatch) => {
   dispatch(geoPositionSearchLoading(true))
   try{
