@@ -19,6 +19,14 @@ const SearchBar = () => {
         setIsOpen(false)
         dispatch(currentCityAction(city))
     }
+    const validate = (e: any) => {
+        const chars = e.target.value.split('');
+        const char = chars.pop();
+        if (!regex.test(char)) {
+          e.target.value = chars.join('');
+          console.log(`${char} is not a valid character.`);
+        }
+      }
 
     const onQueryChange = (e: any) => {
         const query= e.target.value
@@ -46,6 +54,8 @@ const SearchBar = () => {
 }
 
 export default SearchBar
+const regex = /[A-Za-z]/;
+
 const SearchWrapper = styled.div`
     position: relative;
     z-index:9999;
