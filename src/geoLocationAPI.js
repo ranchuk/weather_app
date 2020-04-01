@@ -3,7 +3,7 @@ import { SET_GEO_LOCATION, LOADING_GEO_LOCATION,ERROR_GEO_LOCATION } from './act
 import {geoPositionSearch} from './actions/geoPositionAction'
 
 const GeoLocation = () => {
-    store.dispatch(geoPositionSearch({latitude: 32.0853,longitude: 34.7818})) // default Tel aviv
+    store.dispatch(geoPositionSearch({latitude: 32.0853,longitude: 34.7818}, true)) // default Tel aviv
 
     var options = {
       enableHighAccuracy: true,
