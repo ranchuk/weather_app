@@ -8,11 +8,19 @@ import {fetchFavoritesWeatherLoading} from '../../actions/favoritesAction'
 const MenuBar = (props) => {
     const dispatch = useDispatch()
     const {pathname} = props.history.location
+
+    const handleToggle = (e) => {
+        // TO DO -  handle dark/light theme support
+    }
 return <MenuStyle>
         <LinkStyle>
             {pathname === '/favorites' ? 
-              <Link style={{color: 'white', textDecoration: "none"}} to="/" onClick={(e)=>dispatch(fetchFavoritesWeatherLoading(true))}>Home</Link>
+              <Link style={{color: 'white', textDecoration: "none"}} to="/">Home</Link>
             : <Link style={{color: 'white', textDecoration: "none"}} to="/favorites">Favorites</Link>}
+            <label className="switch">
+                <input type="checkbox" onChange={handleToggle}/>
+                <span className="slider round"></span>
+            </label>
        </LinkStyle>
        <LogoStyle>
             <img src={require("../../pictures/appLogo.png")} width="68px" height="68px" />            

@@ -40,7 +40,7 @@ const SearchBar = () => {
             }
         }
         else {
-            alert('Only english letters allowed')
+            //alert('Only english letters allowed')
         }
     }
 
@@ -78,5 +78,5 @@ const SearchInput = styled.input`
 const SpinnerWrapper = styled.span`
     position:absolute;
     right:20px;
-    top:10px;
+    top:12px;
 `;
