@@ -6,7 +6,7 @@ const FiveDaysForecast = () => {
     const {data: currentCity} = useSelector((state) => state.currentCity)
 
     return <FiveDaysForecastStyle>
-                {currentCity && currentCity.fiveDayWeather.DailyForecasts.map((weatherItem, index)=>{
+                {currentCity && currentCity.fiveDayaWeather && currentCity.fiveDayaWeather.DailyForecasts.map((weatherItem, index)=>{
                     return  <DayStyle key={index}>
                                 <div>{moment(weatherItem.Date).utc().format('MM/DD/YYYY')}</div>
                                 <div>Day: {weatherItem.Day.IconPhrase}</div>

@@ -22,7 +22,6 @@ const GeoLocation = () => {
       store.dispatch({type: SET_GEO_LOCATION, payload: {Latitude: crd.latitude,Longitude: crd.longitude}})
       store.dispatch({type: LOADING_GEO_LOCATION, payload: false})
       store.dispatch(geoPositionSearch({latitude: crd.latitude,longitude: crd.longitude}))
-
     }
     
     function error(err) {

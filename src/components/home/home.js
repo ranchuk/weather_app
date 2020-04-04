@@ -15,17 +15,18 @@ const Home = () => {
 
 
 
-    useEffect(()=>{
-        if(geoPosition && !currentCity.data){
-         dispatch(currentCityAction(geoPosition))
-        }
-    },[geoPosition,dispatch])
-
     // useEffect(()=>{
-    //     if(currentCity.data){
-    //      dispatch(currentCityAction(currentCity.data.cityInfo))
+    //     if(geoPosition && !currentCity.data){
+    //      dispatch(currentCityAction(geoPosition))
     //     }
-    // },[currentCity])
+    // },[geoPosition])
+
+    useEffect(()=>{
+        // if(currentCity.data){
+        //  dispatch(currentCityAction(currentCity.data.cityInfo))
+        // }
+        console.log(currentCity.data)
+    },[currentCity.data])
 
     return <div id='HomeDiv'>
             <SearchBar/>
@@ -57,7 +58,7 @@ export const CurrentCityStyle = styled.div`
 position: relative;
 left:50%;
 transform: translate(-50%);
-margin-top:10px;
+margin-top:50px;
 max-width:50%;
 min-width:265px;
 

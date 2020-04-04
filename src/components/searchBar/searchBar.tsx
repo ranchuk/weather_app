@@ -26,17 +26,18 @@ const SearchBar = () => {
         const query= e.target.value
         setQuery(query)
 
+        if(query === '') {
+            setIsOpen(false)
+            dispatch({
+                type: SET_AUTO_COMPLETE,
+                payload: null
+            });
+        }
+
         if(/^[a-zA-Z]+$/.test(query)){
             if(query !== '') {
                 debounced(query)
-                setIsOpen(true)
-            }
-            else {
-                setIsOpen(false)
-                dispatch({
-                    type: SET_AUTO_COMPLETE,
-                    payload: null
-                });
+                !isOpen && setIsOpen(true)
             }
         }
         else {
@@ -54,7 +55,6 @@ const SearchBar = () => {
 }
 
 export default SearchBar
-const regex = /[A-Za-z]/;
 
 const SearchWrapper = styled.div`
     position: relative;

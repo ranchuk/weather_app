@@ -1,21 +1,32 @@
 import {geoPositionSearch as geoPositionSearchAPI} from '../apiMap'
+import {currentCityAction} from '../actions/currentCityAction'
 import {SET_GEO_POSITION_KEY, LOADING_GEO_POSITION_KEY, ERROR_GEO_POSITION_KEY} from '../actions/types'
 import axios from 'axios'
+import config from '../config';
+
 export const geoPositionSearch = (crd, isDefaultLocation) => {
   return async (dispatch) => {
     dispatch(geoPositionSearchLoading(true));
     try {
       // THIS IS WORKING API CALL, REMOVE ON PRODUCTION
-      // const res = await axios.get(geoPositionSearchAPI({Latitude: crd.latitude, Longitude: crd.longitude}))
-      // dispatch({
-      //   type: SET_GEO_POSITION_KEY,
-      //   payload: res.data
-      // });
-      dispatch({
-        type: SET_GEO_POSITION_KEY,
-        payload: isDefaultLocation ? geoPositionMockData_DefaultLocation : geoPositionMockData
-      });
-      dispatch(geoPositionSearchLoading(false));
+      if ( config.isProduction ) {
+        const res = await axios.get(geoPositionSearchAPI({Latitude: crd.latitude, Longitude: crd.longitude}))
+        dispatch({
+          type: SET_GEO_POSITION_KEY,
+          payload: isDefaultLocation ? geoPositionMockData_DefaultLocation : res.data
+        });
+        dispatch(geoPositionSearchLoading(false));
+        dispatch(currentCityAction((isDefaultLocation ? geoPositionMockData_DefaultLocation : res.data)));
+      }
+      else {
+        dispatch({
+          type: SET_GEO_POSITION_KEY,
+          payload: isDefaultLocation ? geoPositionMockData_DefaultLocation : geoPositionMockData
+        });
+        dispatch(geoPositionSearchLoading(false));
+        dispatch(currentCityAction(isDefaultLocation ? geoPositionMockData_DefaultLocation : geoPositionMockData))
+      }
+  
     }
     catch (err) {
       console.error(err.message);

@@ -4,6 +4,7 @@ import geoPosition from './geoPositionReducer';
 import autoCompleteSearch from './autoCompleteSearchReducer';
 import currentCity from './currentCityReducer';
 import favorites from './favoritesReducer';
+import notifications from './notificationReducer';
 
 export default combineReducers({
     geoLocation,
@@ -11,4 +12,5 @@ export default combineReducers({
     autoComplete: autoCompleteSearch,
     currentCity,
     favorites,
+    notifications,
 });

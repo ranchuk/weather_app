@@ -1,22 +1,49 @@
 import { weatherByKey as weatherByKeyAPI} from '../apiMap'
 import axios from 'axios'
-
+import {
+  enqueueSnackbar,
+  closeSnackbar,
+} from './notificationAction';
+import React from 'react'
+import Button from '@material-ui/core/Button';
+import config from '../config';
 
 import {ADD_TO_FAVORITES, REMOVE_FROM_FAVORITES, SET_FAVORITES, LOADING_FAVORITES_WAETHER, SET_FAVORITES_WEATHER, ERROR_FAVORITES_WAETHER} from '../actions/types'
-export const favoritesAction = (city, add) => {
+export const favoritesAction = (city, add) => (dispatch) => {
 
     if (!add) {
-        return{
+        dispatch({
             type: REMOVE_FROM_FAVORITES,
             payload: city
-          }; 
-        } 
-    
+          });
+
+
+              dispatch(enqueueSnackbar({
+                message: `${city.cityInfo.LocalizedName} removed from favorites`,
+                options: {
+                    key: new Date().getTime() + Math.random(),
+                    variant: 'warning',
+                    action: key => (
+                        <Button onClick={() => closeSnackbar(key)}>dismiss me</Button>
+                    ),
+                },
+              }))
+    }
     else {
-        return{
+        dispatch({
             type: ADD_TO_FAVORITES,
             payload: city
-        };
+        });
+        dispatch(enqueueSnackbar({
+          message: `${city.cityInfo.LocalizedName} added to favorites`,
+          options: {
+              key: new Date().getTime() + Math.random(),
+              variant: 'success',
+              action: key => (
+                  <Button onClick={() => closeSnackbar(key)}>dismiss me</Button>
+              ),
+          },
+        }))
     }
 };
 
@@ -32,27 +59,44 @@ export const fetchFavoritesWeather = (favorites) => async (dispatch) => {
   // THIS IS WORKING API CALL, REMOVE ON PRODUCTION
 
   try{
-    // const asyncRequests = []
-    // for(let favorite of favorites){
-    //     console.log(favorite.cityInfo.Key)
-    //     asyncRequests.push(axios.get(weatherByKeyAPI(favorite.cityInfo.Key)))
-    // }
-    // const res = await Promise.all(asyncRequests)
-    // console.log(res)
-    // dispatch({
-    //     type: SET_FAVORITES_WEATHER,
-    //     payload: res.map((favoriteWeather, index)=>{return {...favorites[index],todayWeather: favoriteWeather.data[0] }})
-    // });
-    setTimeout(()=>{
+    if ( config.isProduction) {
+      const asyncRequests = []
+      for(let favorite of favorites){
+          console.log(favorite.cityInfo.Key)
+          asyncRequests.push(axios.get(weatherByKeyAPI(favorite.cityInfo.Key)))
+      }
+      const res = await Promise.all(asyncRequests)
+      console.log(res)
       dispatch({
-        type: SET_FAVORITES_WEATHER,
-        payload: favorites.map((favorite, index)=>{return {...favorite, todayWeather: FavoritesWeatherMockData[index].data[0]}})
+          type: SET_FAVORITES_WEATHER,
+          payload: res.map((favoriteWeather, index)=>{return {...favorites[index],todayWeather: favoriteWeather.data[0] }})
       });
       dispatch(fetchFavoritesWeatherLoading(false))
-    },500)
+
+    }
+    else{
+      setTimeout(()=>{
+        dispatch({
+          type: SET_FAVORITES_WEATHER,
+          payload: favorites.map((favorite, index)=>{return {...favorite, todayWeather: FavoritesWeatherMockData[index].data[0]}})
+        });
+        dispatch(fetchFavoritesWeatherLoading(false))
+
+      },500)
+    }
   }
     catch(e){
-        dispatch(fetchFavoritesWeatherLoading(false))
+      dispatch(enqueueSnackbar({
+        message: 'error fetching favorites weather information',
+        options: {
+            key: new Date().getTime() + Math.random(),
+            variant: 'error',
+            action: key => (
+                <Button onClick={() => closeSnackbar(key)}>dismiss me</Button>
+            ),
+        },
+      }))
+        // dispatch(fetchFavoritesWeatherLoading(false))
         dispatch(fetchFavoritesWeatherError(e))
 
   }

@@ -1,32 +1,51 @@
-// import {fiveDatysForecasts as fiveDatysForecastsAPI, weatherByKey as weatherByKeyAPI} from '../apiMap'
+import React from 'react'
+import Button from '@material-ui/core/Button';
+import {
+  enqueueSnackbar,closeSnackbar,
+} from './notificationAction';
+import {fiveDatysForecasts as fiveDatysForecastsAPI, weatherByKey as weatherByKeyAPI} from '../apiMap'
 
 import {SET_WEATHER_BY_KEY, LOADING_WEATHER_BY_KEY, ERROR_WEATHER_BY_KEY} from '../actions/types'
-// import axios from 'axios'
+import axios from 'axios'
+import config from '../config';
+
 export const currentCityAction = (city) => async (dispatch) => {
+
   dispatch(currentCityLoading(true))
   try{
-    // THIS IS WORKING API CALL, REMOVE ON PRODUCTION
 
-    // console.log(city)
-    // const res = await Promise.all([axios.get(weatherByKeyAPI(city.Key)),axios.get(fiveDatysForecastsAPI(city.Key))])
-    // const todayWeather = res[0].data[0]
-    // const fiveDayaWeather = res[1].data
-
-    // dispatch({
-    //   type: SET_WEATHER_BY_KEY,
-    //   payload: {todayWeather,fiveDayaWeather,cityInfo:city}
-    // });
-    setTimeout(()=>{
+    if (config.isProduction) {
+      const res = await Promise.all([axios.get(weatherByKeyAPI(city.Key)),axios.get(fiveDatysForecastsAPI(city.Key))])
+      const todayWeather = res[0].data[0]
+      const fiveDayaWeather = res[1].data
+  
       dispatch({
         type: SET_WEATHER_BY_KEY,
-        payload: {...weatherByKeyMockData, cityInfo:city}
+        payload: {todayWeather,fiveDayaWeather,cityInfo:city}
       });
-  
       dispatch(currentCityLoading(false))
-    },500)
-
+    }
+    else {
+      setTimeout(()=>{
+        dispatch({
+          type: SET_WEATHER_BY_KEY,
+          payload: {...weatherByKeyMockData, cityInfo:city}
+        });
+        dispatch(currentCityLoading(false))
+      },500)
+    }
   }
   catch(err){
+    dispatch(enqueueSnackbar({
+      message: 'error fetching weather information',
+      options: {
+          key: new Date().getTime() + Math.random(),
+          variant: 'error',
+          action: key => (
+              <Button onClick={() => closeSnackbar(key)}>dismiss me</Button>
+          ),
+      },
+    }))
     console.error(err.message)
     dispatch(currentCityError(err))
     dispatch(currentCityLoading(false))
@@ -71,7 +90,7 @@ const weatherByKeyMockData = {
       MobileLink: 'http://m.accuweather.com/en/il/porat/212568/current-weather/212568?lang=en-us',
       Link: 'http://www.accuweather.com/en/il/porat/212568/current-weather/212568?lang=en-us'
     },
-    fiveDayWeather: {
+    fiveDayaWeather: {
       Headline: {
         EffectiveDate: '2020-03-28T08:00:00+03:00',
         EffectiveEpochDate: 1585371600,

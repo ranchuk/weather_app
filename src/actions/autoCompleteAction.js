@@ -1,30 +1,48 @@
-// import {autoCompleteSearch as autoCompleteSearchAPI} from '../apiMap'
+import {autoCompleteSearch as autoCompleteSearchAPI} from '../apiMap'
 
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import {SET_AUTO_COMPLETE, LOADING_AUTO_COMPLETE, ERROR_AUTO_COMPLETE} from '../actions/types';
+import { enqueueSnackbar, closeSnackbar } from './notificationAction';
+import axios from 'axios'
+import config from '../config';
 
-import {SET_AUTO_COMPLETE, LOADING_AUTO_COMPLETE, ERROR_AUTO_COMPLETE} from '../actions/types'
-// import axios from 'axios'
 export const autoCompleteSearch = (query) => async (dispatch) => {
+
   dispatch(autoCompleteSearchLoading(true))
   try{
-
+    // throw new Error('')
     // THIS IS WORKING API CALL, REMOVE ON PRODUCTION
 
-    // const res = await axios.get(autoCompleteSearchAPI(query))
-    // dispatch({
-    //   type: SET_AUTO_COMPLETE,
-    //   payload: res.data
-    // });
-    setTimeout(()=>{
+    if(config.isProduction){
+      const res = await axios.get(autoCompleteSearchAPI(query))
       dispatch({
         type: SET_AUTO_COMPLETE,
-        payload: mockAutoCompleteData
+        payload: res.data
       });
-  
       dispatch(autoCompleteSearchLoading(false))
-    }, 500)
-
+    }
+    else{
+      setTimeout(()=>{
+        dispatch({
+          type: SET_AUTO_COMPLETE,
+          payload: mockAutoCompleteData
+        });
+        dispatch(autoCompleteSearchLoading(false))
+      }, 500)
+    }
   }
   catch(err){
+    dispatch(enqueueSnackbar({
+      message: 'error fetching search information ',
+      options: {
+          key: new Date().getTime() + Math.random(),
+          variant: 'error',
+          action: key => (
+              <Button onClick={() => closeSnackbar(key)}>dismiss me</Button>
+          ),
+      },
+    }))
     console.error(err.message)
     dispatch(autoCompleteSearchError(err))
     dispatch(autoCompleteSearchLoading(false))
