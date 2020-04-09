@@ -23,8 +23,9 @@ export const favoritesAction = (city, add) => (dispatch) => {
                 options: {
                     key: new Date().getTime() + Math.random(),
                     variant: 'warning',
+                    autoHideDuration: 1000,
                     action: key => (
-                        <Button onClick={() => closeSnackbar(key)}>dismiss me</Button>
+                        <Button onClick={() => dispatch(closeSnackbar(key))}>dismiss me</Button>
                     ),
                 },
               }))
@@ -39,8 +40,9 @@ export const favoritesAction = (city, add) => (dispatch) => {
           options: {
               key: new Date().getTime() + Math.random(),
               variant: 'success',
+              autoHideDuration: 1000,
               action: key => (
-                  <Button onClick={() => closeSnackbar(key)}>dismiss me</Button>
+                  <Button onClick={() => dispatch(closeSnackbar(key))}>dismiss me</Button>
               ),
           },
         }))
@@ -91,8 +93,9 @@ export const fetchFavoritesWeather = (favorites) => async (dispatch) => {
         options: {
             key: new Date().getTime() + Math.random(),
             variant: 'error',
+            autoHideDuration: 1000,
             action: key => (
-                <Button onClick={() => closeSnackbar(key)}>dismiss me</Button>
+                <Button onClick={() => dispatch(closeSnackbar(key))}>dismiss me</Button>
             ),
         },
       }))

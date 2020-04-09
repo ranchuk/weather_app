@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import {favoritesAction} from '../../actions/favoritesAction'
 import styled from 'styled-components'
-import Button from '@material-ui/core/Button';
 import TodayWeather from './todayWeather';
 import FiveDaysForecast from './fiveDaysforecast';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -17,25 +16,23 @@ const CurrentCityWeather = () => {
         isFavorite ? dispatch(favoritesAction(currentCity, false)) : dispatch(favoritesAction(currentCity, true))
     }
     return <CurrentCityWeatherStyle>
-                <CityName>{currentCity && currentCity.cityInfo && currentCity.cityInfo.LocalizedName}</CityName>
+                <TodayWeather currentCity={currentCity}/>
+                <FiveDaysForecast currentCity={currentCity}/>
                 <ButtonStyle><FavoriteIcon  onClick={()=>favoriteFunc()} color={isFavorite ? "secondary" : "primary"} fontSize={'large'} /></ButtonStyle>
-                <TodayWeather/>
-                <FiveDaysForecast/>
             </CurrentCityWeatherStyle>
 }
 
 export default CurrentCityWeather
 
-const CurrentCityWeatherStyle = styled.div`
-    border: 1px solid black;
-    border-radius:3px;
-    text-align:center;
-    position:relative;
-`;
-const CityName = styled.h3`
+const CurrentCityWeatherStyle = styled.div` 
+    margin-top:5rem;
+    @media screen 
+            and (max-device-width: 580px) 
+            and (-webkit-min-device-pixel-ratio: 1) {     
+            margin-top:10rem;
+    }
 `
-
-const ButtonStyle = styled.div`
+export const ButtonStyle = styled.div`
 cursor: pointer;
 position: absolute;
 right:10px;

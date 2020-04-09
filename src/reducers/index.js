@@ -5,6 +5,8 @@ import autoCompleteSearch from './autoCompleteSearchReducer';
 import currentCity from './currentCityReducer';
 import favorites from './favoritesReducer';
 import notifications from './notificationReducer';
+import degreeReducer from './degreeReducer';
+
 
 export default combineReducers({
     geoLocation,
@@ -13,4 +15,5 @@ export default combineReducers({
     currentCity,
     favorites,
     notifications,
+    degreeType: degreeReducer,
 });

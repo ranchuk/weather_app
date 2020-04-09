@@ -41,8 +41,9 @@ export const currentCityAction = (city) => async (dispatch) => {
       options: {
           key: new Date().getTime() + Math.random(),
           variant: 'error',
+          autoHideDuration: 1000,
           action: key => (
-              <Button onClick={() => closeSnackbar(key)}>dismiss me</Button>
+              <Button onClick={() => dispatch(closeSnackbar(key))}>dismiss me</Button>
           ),
       },
     }))

@@ -39,7 +39,7 @@ export const autoCompleteSearch = (query) => async (dispatch) => {
           key: new Date().getTime() + Math.random(),
           variant: 'error',
           action: key => (
-              <Button onClick={() => closeSnackbar(key)}>dismiss me</Button>
+              <Button onClick={() => dispatch(closeSnackbar(key))}>dismiss me</Button>
           ),
       },
     }))

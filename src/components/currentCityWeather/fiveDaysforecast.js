@@ -1,17 +1,29 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import moment from 'moment'
-const FiveDaysForecast = () => {
-    const {data: currentCity} = useSelector((state) => state.currentCity)
+import {convertToC} from '../../utils'
+// import {FiveDaysForecastStyle, DayStyle, DayStyleLineHeader, DayStyleLine} from './styles'
+
+var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const FiveDaysForecast = ({currentCity}) => {
+    const isCelsius = useSelector((state) => state.degreeType.isCelsius)
 
     return <FiveDaysForecastStyle>
                 {currentCity && currentCity.fiveDayaWeather && currentCity.fiveDayaWeather.DailyForecasts.map((weatherItem, index)=>{
                     return  <DayStyle key={index}>
-                                <div>{moment(weatherItem.Date).utc().format('MM/DD/YYYY')}</div>
-                                <div>Day: {weatherItem.Day.IconPhrase}</div>
-                                <div>Night: {weatherItem.Night.IconPhrase}</div>
-                                <div>Temperature: {weatherItem.Temperature.Minimum.value} - {weatherItem.Temperature.Maximum.value}</div>
+                                <DayStyleLineHeader>{days[(new Date(moment(weatherItem.Date)).getDay())]}</DayStyleLineHeader>
+                                <DayStyleLine>Day: {weatherItem.Day.IconPhrase}</DayStyleLine>
+                                {/* <DayStyleLine>Night: {weatherItem.Night.IconPhrase}</DayStyleLine> */}
+                                <DayStyleLine>Max: 
+                                    {isCelsius && <span>{convertToC(weatherItem.Temperature.Maximum.Value)}°C</span>}
+                                    {!isCelsius && <span>{weatherItem.Temperature.Maximum.Value}°F</span>}
+                                </DayStyleLine>
+                                <DayStyleLine>Min: 
+                                    {isCelsius && <span>{convertToC(weatherItem.Temperature.Minimum.Value)}°C</span>}
+                                    {!isCelsius && <span>{weatherItem.Temperature.Minimum.Value}°F</span>}
+                                </DayStyleLine>
+
                             </DayStyle>
                 })}
             </FiveDaysForecastStyle>
@@ -19,21 +31,32 @@ const FiveDaysForecast = () => {
 
 export default FiveDaysForecast
 
-const FiveDaysForecastStyle = styled.div`
-display: flex;
-justify-content:space-evenly;
-flex-wrap:wrap;
-text-align:center;
-padding:15px;
+export const FiveDaysForecastStyle = styled.div`
+        display: flex;
+        justify-content: space-between;
+        margin-top:10rem;
+        @media screen 
+        and (max-device-width: 580px) 
+        and (-webkit-min-device-pixel-ratio: 1) { 
+            /* flex-wrap:wrap; */
+            overflow:scroll;
+        }
 `;
-const DayStyle = styled.div`
-padding: 15px;
-text-align:center;
-border:1px solid black;
-border-radius:3px;
-height: 200px;
-padding:10px;
-margin-bottom: 20px;
-width:15%;
-min-width:150px;
+
+export const DayStyle = styled.div`        
+    padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+    text-align:center;
+    font-size: 1.4rem;
+    height:25rem;
+    background-color:white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+    flex-grow:1;
+`;
+export const DayStyleLine = styled.div`
+margin-bottom:1rem;
+`;
+export const DayStyleLineHeader = styled.div`
+margin-bottom:1rem;
+font-size: 2.5rem;
+font-weight: 600;
 `;

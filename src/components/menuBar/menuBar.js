@@ -1,55 +1,60 @@
 import React from 'react';
 import { Link, withRouter } from "react-router-dom";
 import styled from 'styled-components'
-import {useDispatch} from 'react-redux';
-import {fetchFavoritesWeatherLoading} from '../../actions/favoritesAction'
-
+import SearchBar from '../searchBar/searchBar.js';
 
 const MenuBar = (props) => {
-    const dispatch = useDispatch()
     const {pathname} = props.history.location
 
-    const handleToggle = (e) => {
-        // TO DO -  handle dark/light theme support
-    }
 return <MenuStyle>
+           <LogoStyle>
+            <img src={require("../../pictures/appLogo.png")} width="100px" height="100px" />            
+       </LogoStyle>
+       {pathname !== '/favorites' ? <SearchStyle><SearchBar/></SearchStyle> : null}
+
         <LinkStyle>
             {pathname === '/favorites' ? 
               <Link style={{color: 'white', textDecoration: "none"}} to="/">Home</Link>
             : <Link style={{color: 'white', textDecoration: "none"}} to="/favorites">Favorites</Link>}
-            <label className="switch">
-                <input type="checkbox" onChange={handleToggle}/>
-                <span className="slider round"></span>
-            </label>
        </LinkStyle>
-       <LogoStyle>
-            <img src={require("../../pictures/appLogo.png")} width="68px" height="68px" />            
-       </LogoStyle>
        </MenuStyle>
 }
 
 export default withRouter(MenuBar)
+    const SearchStyle = styled.div`
+    position:absolute;
+    top:50%;
+    transform: translate(-50%, -50%);
+    left:50%;
 
+    @media screen 
+            and (max-device-width: 580px) 
+            and (-webkit-min-device-pixel-ratio: 1) { 
+                top:150%;
+    }
+`
 const MenuStyle = styled.div`
-    position: relative;
+    position:relative;
+    display:flex;
     width: 100%;
-    border:1px solid black;
-    height:70px;
-    background-color:purple;
-    color:white;
-    font-size:20px;
+    height:8rem;
+    @media screen 
+            and (max-device-width: 768px) 
+            and (-webkit-min-device-pixel-ratio: 1) { 
+                /* font-size:2.5rem; */
+    }
 `;
 
 const LinkStyle = styled.div`
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right:2%;
+font-size:2.5rem;
+position:absolute;
+top:50%;
+transform: translateY(-50%);
+right:0rem;
 `;
 const LogoStyle = styled.div`
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left:1%;
-    height:68px;
+    position:absolute;
+    top:50%;
+    transform: translateY(-43%);
+    left:-1.6rem;
 `;
