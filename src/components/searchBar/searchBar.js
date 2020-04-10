@@ -43,17 +43,24 @@ const SearchBar = () => {
             }
         }
         else {
-            dispatch(enqueueSnackbar({
-                message: 'Invalid input. accept only english letters',
-                options: {
-                    key: new Date().getTime() + Math.random(),
-                    variant: 'error',
-                    autoHideDuration: 5000,
-                    action: key => (
-                        <Button onClick={() => dispatch(closeSnackbar(key))}>dismiss me</Button>
-                    ),
-                },
-            }))
+            dispatch(enqueueSnackbar(
+                                            {
+                                                message: 'Invalid input. accept only english letters',
+                                                options: {
+                                                    key: new Date().getTime() + Math.random(),
+                                                    variant: 'error',
+                                                    autoHideDuration: 5000,
+                                                    action: key => (
+                                                        <Button onClick={() => dispatch(closeSnackbar(key))}>Close</Button>
+                                                    ),
+                                                    anchorOrigin: {
+                                                        vertical: 'top',
+                                                        horizontal: 'left',
+                                                    },
+                                                },
+                                            }
+                                    )
+                    )
             //alert('Only english letters allowed')
         }
     }
@@ -89,7 +96,7 @@ const CitiesList = (props) => {
 
 const CitiesListStyle = styled.div`
 position: absolute;
-z-index:9999;
+z-index:1000;
 /* top:50%; */
 `
 
@@ -100,10 +107,22 @@ const CityItem = styled.div`
     background-color:white;
     width:26.5rem;
     font-size: 1.5rem;
-    z-index:9999;
     /* padding: 1rem; */
     cursor: pointer;
     :hover {
         background-color: gainsboro;
+    }
+
+    animation-name: dropDownSlow;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+    z-index: 1;
+    @keyframes dropDownSlow {
+        0% {
+            height: 0%
+        }
+        100% {
+            height: 100%;
+        }
     }
 `;

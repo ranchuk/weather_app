@@ -22,12 +22,12 @@ const TodayWeather = ({currentCity, favorites}) => {
                             {isCelsius && <div>{Math.round(currentCity.todayWeather.Temperature.Metric.Value)}°C</div>}
                             {!isCelsius && <div>{convertToF(currentCity.todayWeather.Temperature.Metric.Value)}°F</div>}
                         </CityAndTempStyle>
-                        <ImageAndStatus>
-                            <ButtonStyle>
+                        <StickySide>
                                 <IconStyle>{!isFavorite ? <FavoriteBorderIcon onClick={()=>favoriteFunc()} color={"secondary"} fontSize={"inherit"}/> :
                                 <FavoriteIcon onClick={()=>favoriteFunc()} color={"secondary"}  fontSize={"inherit"}/>}
                                 </IconStyle>
-                            </ButtonStyle>
+                            </StickySide>
+                        <ImageAndStatus>
                             <WeatherStatus>{currentCity.todayWeather.WeatherText}</WeatherStatus>
                             <Image
                             src={`https://developer.accuweather.com/sites/default/files/${
@@ -48,8 +48,13 @@ const IconStyle = styled.span`
     position:absolute;
     display:inline-block;
     right: 0px;
+    top:50%;
+    display:flex;
+    align-items:center;
+    transform:translateY(-50%);
 `
-export const ButtonStyle = styled.div`
+export const StickySide = styled.div`
+font-size:4rem;
 position: absolute;
 border-radius:1rem;
 width: 10rem ;
@@ -57,7 +62,7 @@ height:5rem;
 background-color:#ffff;
 transition: all .4s ease-in-out;
 animation: mymove 3s infinite;
-
+top:50%;
 
 &:hover {
     transform: scale(1.1);
@@ -67,7 +72,7 @@ cursor: pointer;
 @media screen 
             and (max-device-width: 580px) 
             and (-webkit-min-device-pixel-ratio: 1) { 
-                bottom: -7rem;
+                top:150%;
     }
 @keyframes mymove {
         0% {
@@ -86,6 +91,7 @@ display:flex;
 align-items:center;
 justify-content: space-between;
 font-size:4rem;
+transform:translateX(5%);
 `
 export const Image = styled.img`
 width:10rem;
@@ -125,6 +131,7 @@ export const TodayWeatherStyle = styled.div`
     animation-name: fadeIn;
     animation-duration: 2s;
     animation-timing-function: ease-out;
+    z-index: 1;
     @keyframes fadeIn {
         0% {
             opacity: 0;

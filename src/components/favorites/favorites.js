@@ -19,7 +19,7 @@ const Favorites = (props) => {
     },[])
 
 return <FavoritesPage> 
-                {/* <PageHeadline>Favorites</PageHeadline> */}
+                <PageHeadline>Favorites</PageHeadline>
                 {favorites.data.length === 0 ? 
                 <NoFavoritesStyle>No Favorites Selected</NoFavoritesStyle> :
                  favorites.loading ? 
@@ -79,17 +79,20 @@ const NoFavoritesStyle = styled.div`
 // margin-top:10px;
 // `
 const FavoritesPage = styled.div`
-    text-align:center;
-
+    margin-top: 0rem;
+    text-align: center;
 `
 const PageHeadline = styled.span`
 display:inline-block;
+margin-bottom: 5rem;
 color:#ffffff;
-    font-size: 6rem;
+    font-size: 4.5rem;
     @media screen 
             and (max-device-width: 580px) 
             and (-webkit-min-device-pixel-ratio: 1) {     
             font-size: 3rem;
+            margin-bottom: 3rem;
+
     }
 `
 const FavoritesWrapper = styled.div`
@@ -99,19 +102,33 @@ const FavoritesWrapper = styled.div`
     align-content:space-between;
 `;
 const FavoriteItemWrapper = styled.div`
-    border:1px solid white;
-    margin:10px;
+    border:0.1rem solid #ffff;
+    border-radius: 1.5rem;
+    margin:2rem;
     text-align:center;
-    padding:5px 15px 15px 15px;
+    padding:0.5rem 1.5rem 1.5rem 1.5rem;
     cursor:pointer;
-    background-color:white;
+
+    font-size: 1.4rem;
+    background-color:#ffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+    min-width:15rem;
+
+    transition: all .4s ease-in-out;
+
+    &:hover {
+        transform: scale(1.1);
+    }
 `;
 const FavoriteItem = styled.div`
     cursor:pointer;
     margin-bottom:30px;
 `;
 
-const FavoriteTitle = styled.h3``
+const FavoriteTitle = styled.span`
+    display:block;
+    font-size:3rem;
+`
 
 const Image = styled.img`
 `

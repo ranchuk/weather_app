@@ -25,8 +25,8 @@ return <MenuStyle>
         </TempTypeButtom>
         <LinkStyle>
             {pathname === '/favorites' ? 
-              <Link style={{color: 'white', textDecoration: "none"}} to="/">Home</Link>
-            : <Link style={{color: 'white', textDecoration: "none"}} to="/favorites">Favorites</Link>}
+              <Link style={{color:'#ffff' , textDecoration: "none"}} to="/">Home</Link>
+            : <Link style={{color: '#ffff', textDecoration: "none"}} to="/favorites">Favorites</Link>}
        </LinkStyle>
        </MenuStyle>
 }
@@ -34,6 +34,7 @@ return <MenuStyle>
 export default withRouter(MenuBar)
 
     const SearchStyle = styled.div`
+    z-index: 3;
     position:absolute;
     top:50%;
     transform: translate(-50%, -50%);
