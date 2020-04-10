@@ -18,15 +18,22 @@ return <MenuStyle>
        </LogoStyle>
        {pathname !== '/favorites' ? <SearchStyle><SearchBar/></SearchStyle> : null}
        <TempTypeButtom>
-                            <label className="switch">
+       <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" onChange={handleToggle}/>
+            <label class="onoffswitch-label" for="myonoffswitch">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+      </div>  
+                            {/* <label className="switch">
                                 <input type="checkbox" onChange={handleToggle}/>
                                 <span className="slider round"></span>
-                            </label>
+                            </label> */}
         </TempTypeButtom>
         <LinkStyle>
             {pathname === '/favorites' ? 
-              <Link style={{color:'#ffff' , textDecoration: "none"}} to="/">Home</Link>
-            : <Link style={{color: '#ffff', textDecoration: "none"}} to="/favorites">Favorites</Link>}
+              <Link style={{color:'#ffffff' , textDecoration: "none"}} to="/">Home</Link>
+            : <Link style={{color: '#ffffff', textDecoration: "none"}} to="/favorites">Favorites</Link>}
        </LinkStyle>
        </MenuStyle>
 }

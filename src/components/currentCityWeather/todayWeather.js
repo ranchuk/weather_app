@@ -59,7 +59,7 @@ position: absolute;
 border-radius:1rem;
 width: 10rem ;
 height:5rem;
-background-color:#ffff;
+background-color:#ffffff;
 transition: all .4s ease-in-out;
 animation: mymove 3s infinite;
 top:50%;

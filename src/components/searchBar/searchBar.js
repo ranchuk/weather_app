@@ -68,7 +68,7 @@ const SearchBar = () => {
     return <div onBlur={(e)=>{setTimeout(()=>setIsOpen(false),100)}}>
                         <SearchInput placeholder={'Search City'} onChange={onQueryChange} value={query} onFocus={(e)=>query !== '' && setIsOpen(true)}/>
                         {isLoading ? <SpinnerWrapper><CircularProgress size={20}/></SpinnerWrapper> :
-                        isOpen && <CitiesListStyle><CitiesList onSelect={onSelect}/></CitiesListStyle>}
+                        isOpen && <CitiesList onSelect={onSelect}/>}
             </div>
 }
 
@@ -89,15 +89,27 @@ const SpinnerWrapper = styled.span`
 const CitiesList = (props) => {
     const autoComplete = useSelector((state) => state.autoComplete)
 
-    return !autoComplete.loading && autoComplete.data && autoComplete.data.map((city, index)=>{
-        return <CityItem key={index} onClick={(e)=>props.onSelect(city)}><h3>{city.LocalizedName}</h3></CityItem>
-    })
+    return <CitiesListStyle>{!autoComplete.loading && autoComplete.data && autoComplete.data.map((city, index)=>{
+                return <CityItem key={index} onClick={(e)=>props.onSelect(city)}><h3>{city.LocalizedName}</h3></CityItem>
+            })}
+    </CitiesListStyle>
 }
 
 const CitiesListStyle = styled.div`
-position: absolute;
-z-index:1000;
-/* top:50%; */
+    position: absolute;
+    z-index:1000;
+    animation-name: dropDownSlow;
+    animation-duration: 4s;
+    animation-timing-function: ease-out;
+    z-index: 1;
+    @keyframes dropDownSlow {
+        0% {
+            height: 0px;
+        }
+        100% {
+            height:100px;
+        }
+    }
 `
 
 const CityItem = styled.div`
@@ -111,18 +123,5 @@ const CityItem = styled.div`
     cursor: pointer;
     :hover {
         background-color: gainsboro;
-    }
-
-    animation-name: dropDownSlow;
-    animation-duration: 2s;
-    animation-timing-function: ease-out;
-    z-index: 1;
-    @keyframes dropDownSlow {
-        0% {
-            height: 0%
-        }
-        100% {
-            height: 100%;
-        }
     }
 `;

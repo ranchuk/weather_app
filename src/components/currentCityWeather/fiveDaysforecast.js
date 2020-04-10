@@ -89,7 +89,7 @@ export const DayStyle = styled.div`
     text-align:center;
     font-size: 1.8rem;
     height:15rem;
-    background-color:#ffff;
+    background-color:#ffffff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
     flex-grow:1;
     min-width:15rem;
