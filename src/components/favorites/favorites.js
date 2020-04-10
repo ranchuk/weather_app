@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {currentCityAction} from '../../actions/currentCityAction';
 import {convertToF} from '../../utils'
-import {HeadingText, SpinnerWrapper, SpinnerText} from '../home/home'
+import { SpinnerWrapper, SpinnerText} from '../home/home'
 const Favorites = (props) => {
     const dispatch = useDispatch()
     const favorites = useSelector((state) => state.favorites)
@@ -19,12 +19,12 @@ const Favorites = (props) => {
     },[])
 
 return <FavoritesPage> 
-                <PageHeadline>Favorites</PageHeadline>
+                {/* <PageHeadline>Favorites</PageHeadline> */}
                 {favorites.data.length === 0 ? 
                 <NoFavoritesStyle>No Favorites Selected</NoFavoritesStyle> :
                  favorites.loading ? 
                 <SpinnerWrapper>
-                    <CircularProgress />
+                    <CircularProgress color='inherit' size='6rem'/>
                     <SpinnerText>Loading weather data...</SpinnerText>
                 </SpinnerWrapper> : (
                 <FavoritesWrapper>
@@ -32,7 +32,7 @@ return <FavoritesPage>
                         return <FavoriteItemWrapper key={index}>
                                     <FavoriteItem onClick={(e)=> {dispatch(currentCityAction(favorite.cityInfo)); props.history.push('/')}}>
                                         <FavoriteTitle>{favorite.cityInfo.LocalizedName}</FavoriteTitle>
-                                        {/* <TodayWeatherStyle>
+                                        <TodayWeatherStyle>
                                             <h3>{favorite.todayWeather.WeatherText}</h3>
                                             <ImageAndTemp>
                                                 <Image
@@ -46,7 +46,7 @@ return <FavoritesPage>
                                                 {isCelsius && <span>{Math.round(favorite.todayWeather.Temperature.Metric.Value)}°C</span>}
                                                 {!isCelsius && <span>{convertToF(favorite.todayWeather.Temperature.Metric.Value)}°F</span>}
                                             </ImageAndTemp>        
-                                        </TodayWeatherStyle> */}
+                                        </TodayWeatherStyle>
                                     </FavoriteItem>
                                     <Button onClick={(e)=>dispatch(favoritesAction(favorite, false))} variant="contained" color="secondary" startIcon={<DeleteIcon />}>Remove from Favorite</Button>
                                 </FavoriteItemWrapper>})}
@@ -61,10 +61,12 @@ const TodayWeatherStyle = styled.div`
     min-width:200px;
 `;
 const NoFavoritesStyle = styled.div`
+    color:#ffffff;
     position: absolute;
     left:50%;
     top:50%;
     transform: translate(-50%,-50%);
+    font-size: 3rem;
 `
 // const SpinnerWrapper = styled.div`
 //     position: absolute;
@@ -97,11 +99,12 @@ const FavoritesWrapper = styled.div`
     align-content:space-between;
 `;
 const FavoriteItemWrapper = styled.div`
-    border:1px solid black;
+    border:1px solid white;
     margin:10px;
     text-align:center;
     padding:5px 15px 15px 15px;
     cursor:pointer;
+    background-color:white;
 `;
 const FavoriteItem = styled.div`
     cursor:pointer;

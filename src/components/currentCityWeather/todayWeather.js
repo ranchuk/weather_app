@@ -2,14 +2,19 @@ import React from 'react';
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import {convertToF} from '../../utils'
-import changeDegreeType from '../../actions/degreeAction'
 import { useDispatch } from 'react-redux'
-// import {TodayWeatherStyle, CityName,WeatherStatus, ImageAndTemp, Image, ImageAndStatus, CityAndTempStyle} from './styles'
-const TodayWeather = ({currentCity}) => {
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+
+import {favoritesAction} from '../../actions/favoritesAction'
+
+const TodayWeather = ({currentCity, favorites}) => {
     const dispatch = useDispatch()
     const isCelsius = useSelector((state) => state.degreeType.isCelsius)
-    const handleToggle = (e) => {
-        dispatch(changeDegreeType())
+    const isFavorite = currentCity && favorites.length > 0 && favorites.find((favorite)=>favorite.cityInfo.Key=== currentCity.cityInfo.Key)
+
+    const favoriteFunc = () => {
+        isFavorite ? dispatch(favoritesAction(currentCity, false)) : dispatch(favoritesAction(currentCity, true))
     }
     return   <TodayWeatherStyle>
                          <CityAndTempStyle>
@@ -18,6 +23,11 @@ const TodayWeather = ({currentCity}) => {
                             {!isCelsius && <div>{convertToF(currentCity.todayWeather.Temperature.Metric.Value)}°F</div>}
                         </CityAndTempStyle>
                         <ImageAndStatus>
+                            <ButtonStyle>
+                                <IconStyle>{!isFavorite ? <FavoriteBorderIcon onClick={()=>favoriteFunc()} color={"secondary"} fontSize={"inherit"}/> :
+                                <FavoriteIcon onClick={()=>favoriteFunc()} color={"secondary"}  fontSize={"inherit"}/>}
+                                </IconStyle>
+                            </ButtonStyle>
                             <WeatherStatus>{currentCity.todayWeather.WeatherText}</WeatherStatus>
                             <Image
                             src={`https://developer.accuweather.com/sites/default/files/${
@@ -29,19 +39,53 @@ const TodayWeather = ({currentCity}) => {
                             />
                             
                         </ImageAndStatus>
-                        <label className="switch">
-                            <input type="checkbox" onChange={handleToggle}/>
-                            <span className="slider round"></span>
-                        </label>
             </TodayWeatherStyle>
 
 }
 
 export default TodayWeather
+const IconStyle = styled.span`
+    position:absolute;
+    display:inline-block;
+    right: 0px;
+`
+export const ButtonStyle = styled.div`
+position: absolute;
+border-radius:1rem;
+width: 10rem ;
+height:5rem;
+background-color:#ffff;
+transition: all .4s ease-in-out;
+animation: mymove 3s infinite;
 
+
+&:hover {
+    transform: scale(1.1);
+    left: 0rem;
+}
+cursor: pointer;
+@media screen 
+            and (max-device-width: 580px) 
+            and (-webkit-min-device-pixel-ratio: 1) { 
+                bottom: -7rem;
+    }
+@keyframes mymove {
+        0% {
+            left:-7rem;
+        }
+        50% {
+            left: -4rem;
+        }
+        100% {
+            left:-7rem;
+        }
+}
+`
 export const ImageAndStatus = styled.div`
 display:flex;
 align-items:center;
+justify-content: space-between;
+font-size:4rem;
 `
 export const Image = styled.img`
 width:10rem;
@@ -73,6 +117,7 @@ export const CityName = styled.span`
     }
 `
 export const TodayWeatherStyle = styled.div`
+    position:relative;
     display:flex;
     flex-direction:column;
     align-items:center;

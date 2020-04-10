@@ -22,7 +22,6 @@ function App () {
       <SnackbarProvider maxSnack={4}>
       <Notifier />
         <BrowserRouter>
-          <div id="appWrapper">
             <Menu/>
             <Route
               path="/"
@@ -34,7 +33,6 @@ function App () {
               component={Favorites}
               exact
             />
-          </div>
         </BrowserRouter>
       </SnackbarProvider>
     </Provider>

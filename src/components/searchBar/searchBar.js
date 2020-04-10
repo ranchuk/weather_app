@@ -89,6 +89,7 @@ const CitiesList = (props) => {
 
 const CitiesListStyle = styled.div`
 position: absolute;
+z-index:9999;
 /* top:50%; */
 `
 
@@ -99,6 +100,7 @@ const CityItem = styled.div`
     background-color:white;
     width:26.5rem;
     font-size: 1.5rem;
+    z-index:9999;
     /* padding: 1rem; */
     cursor: pointer;
     :hover {
