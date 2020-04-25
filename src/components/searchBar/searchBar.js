@@ -35,7 +35,7 @@ const SearchBar = () => {
             });
         }
 
-        else if(/^[a-zA-Z]+$/.test(query)){
+        else if(/^[a-zA-Z\s]+$/.test(query)){
             if(query !== '') {
                 setQuery(query)
                 !isOpen && setIsOpen(true)
@@ -119,7 +119,7 @@ const CityItem = styled.div`
     background-color:white;
     width:26.5rem;
     font-size: 1.5rem;
-    /* padding: 1rem; */
+    padding: 1rem;
     cursor: pointer;
     :hover {
         background-color: gainsboro;
