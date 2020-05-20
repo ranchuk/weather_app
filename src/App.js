@@ -10,9 +10,16 @@ import { BrowserRouter, Route } from "react-router-dom";
 import {setFavorites} from './actions/favoritesAction'
 import { SnackbarProvider } from 'notistack';
 import Notifier from './components/Notifier/Notifier';
+import loadable from '@loadable/component'
 
-const Home = lazy(() => import('./components/home/home.js'));
-const Favorites = lazy(() => import('./components/favorites/favorites.js'));
+// import Home from './components/home/home.js'
+// import Favorites from './components/favorites/favorites.js'
+
+// const Home = lazy(() => import('./components/home/home.js'));
+// const Favorites = lazy(() => import('./components/favorites/favorites.js'));
+
+const Home = loadable(() => import(/* webpackChunkName: "home" */ './components/home/home.js'));
+const Favorites = loadable(() => import(/* webpackChunkName: "favorites" */ './components/favorites/favorites.js'));
 
 GeoLocation()
 

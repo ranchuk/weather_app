@@ -18,11 +18,11 @@ return <MenuStyle>
        </LogoStyle>
        {pathname !== '/favorites' ? <SearchStyle><SearchBar/></SearchStyle> : null}
        <TempTypeButtom>
-       <div class="onoffswitch">
-            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" onChange={handleToggle}/>
-            <label class="onoffswitch-label" for="myonoffswitch">
-                <span class="onoffswitch-inner"></span>
-                <span class="onoffswitch-switch"></span>
+       <div className="onoffswitch">
+            <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch" onChange={handleToggle}/>
+            <label className="onoffswitch-label" htmlFor="myonoffswitch">
+                <span className="onoffswitch-inner"></span>
+                <span className="onoffswitch-switch"></span>
             </label>
       </div>  
                             {/* <label className="switch">

@@ -3,15 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@loadable/component": "^5.12.0",
     "@material-ui/core": "^4.9.8",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.47",
-    "@types/jest": "^25.1.4",
-    "@types/node": "^12.12.34",
-    "@types/react": "^16.9.29",
-    "@types/react-dom": "^16.9.5",
     "axios": "^0.19.2",
-    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "notistack": "^0.9.9",
     "react": "^16.13.1",
@@ -22,10 +18,10 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.0.1",
-    "typescript": "^3.8.3",
     "validator": "^13.0.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -47,9 +43,6 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.149",
-    "@types/react-redux": "^7.1.7",
-    "@types/react-router-dom": "^5.1.3",
-    "@types/styled-components": "^5.0.1"
+    "source-map-explorer": "^2.4.2"
   }
 }

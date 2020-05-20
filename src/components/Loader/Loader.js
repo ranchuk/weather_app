@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 
-const Loader = (props: any) => {
+const Loader = (props) => {
     console.log('loader on')
     return <LoadingText>Loading...</LoadingText>
 }
