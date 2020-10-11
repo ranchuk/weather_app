@@ -8,6 +8,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.47",
     "axios": "^0.19.2",
+    "bugsmapper": "^1.0.0",
     "moment": "^2.24.0",
     "notistack": "^0.9.9",
     "react": "^16.13.1",
@@ -22,7 +23,7 @@
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "react-scripts start",
+    "start": "set PORT=8001 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

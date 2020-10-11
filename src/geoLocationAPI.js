@@ -4,7 +4,9 @@ import {geoPositionSearch} from './actions/geoPositionAction'
 
 const GeoLocation = () => {
     store.dispatch(geoPositionSearch({latitude: 32.0853,longitude: 34.7818}, true)) // default Tel aviv
-
+    store.dispatch({type: LOADING_GEO_LOCATION, payload: true})
+    navigator.geolocation.getCurrentPosition(success, error, options);
+    
     var options = {
       enableHighAccuracy: true,
       timeout: 5000,
@@ -30,8 +32,6 @@ const GeoLocation = () => {
 
       console.warn(`ERROR(${err.code}): ${err.message}`);
     }
-    store.dispatch({type: LOADING_GEO_LOCATION, payload: true})
-    navigator.geolocation.getCurrentPosition(success, error, options);
 }
 
 export default GeoLocation
